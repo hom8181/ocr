@@ -4,51 +4,110 @@
     <meta charset="UTF-8">
     <title>OCR Test</title>
 
+    <style>
+        .loader {
+            border: 16px solid #f3f3f3;
+            border-top: 16px solid #3498db;
+            border-radius: 50%;
+            width: 120px;
+            height: 120px;
+            animation: spin 2s linear infinite;
+        }
 
-    <div>
-        <input type="file">
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
 
-        <div>
-            <label for="company_name">회사 명
-                <input type="text" id="company_name">
-            </label>
-        </div>
-        <div>
-            <label for="business_license_number"> 사업자 등록번호
-                <input type="text" id="business_license_number">
-            </label>
-        </div>
-        <div>
-            <label for="representative_name">대표자 명
-                <input type="text" id="representative_name">
-            </label>
-        </div>
-        <div>
-            <label for="business_type">업태
-                <input type="text" id="business_type">
-            </label>
-        </div>
-        <div>
-            <label for="business_item">종목
-                <input type="text" id="business_item">
-            </label>
-        </div>
+        .d-none {
+            display: none;
+        }
 
-        <div>
-            <label for="address">주소
-                <input type="text" id="address">
-            </label>
-        </div>
-
-
-
-    </div>
-
+    </style>
 </head>
 <body>
 
+<div>
+    <input id="imageFile" name="file"
+           type="file" accept="image/*"
+           multiple/>
+
+    <div class="loader d-none"></div>
+
+    <img alt="" id="previewImage" style="height: 350px; max-width: 300px;" src="">
+
+
+    <div>
+        <label for="company_name">회사 명
+            <input type="text" id="company_name">
+        </label>
+    </div>
+    <div>
+        <label for="business_license_number"> 사업자 등록번호
+            <input type="text" id="business_license_number">
+        </label>
+    </div>
+    <div>
+        <label for="representative_name">대표자 명
+            <input type="text" id="representative_name">
+        </label>
+    </div>
+    <div>
+        <label for="business_type">업태
+            <input type="text" id="business_type">
+        </label>
+    </div>
+    <div>
+        <label for="business_item">종목
+            <input type="text" id="business_item">
+        </label>
+    </div>
+
+    <div>
+        <label for="address">주소
+            <input type="text" id="address">
+        </label>
+    </div>
+
+
+</div>
+
 </body>
+
+
+<script src="https://code.jquery.com/jquery-latest.min.js"></script>
+
 <script>
+    $('#imageFile').on('change', function () {
+        let extension = $(this).val().split('.').pop().toLowerCase(); //확장자
+        if ($.inArray(extension, ['png', 'jpg', 'jpeg']) === -1) {
+            if (extension === "") {
+                window.alert('선택된 파일이 없습니다.');
+            } else {
+                window.alert('이미지 파일이 아닙니다 (gif, png, jpg, jpeg 만 업로드 가능)');
+            }
+            document.getElementById("imageFile").value = "";
+
+            $("#previewImage").attr("src", "");
+        } else {
+            let loader = $("div.loader");
+            loader.removeClass("d-none");                       // loading 표시
+
+            const file = $('#imageFile').prop("files")[0];
+            const blobURL = window.URL.createObjectURL(file);
+
+            $("#previewImage").attr("src", blobURL);
+
+            let formData = new FormData();
+            const inputFile = document.querySelector("#imageFile");
+            formData.append("image", inputFile.files[0]);
+
+            let xmlHttpRequest = new XMLHttpRequest();
+            xmlHttpRequest.addEventListener("load", function () {
+
+            });
+        }
+    });
 
 
 </script>
