@@ -104,8 +104,57 @@
 
             let xmlHttpRequest = new XMLHttpRequest();
             xmlHttpRequest.addEventListener("load", function () {
+                if (xmlHttpRequest.status === 200) {
+                    loader.addClass("d-none");                  // loading 제거
 
+                    let response = xmlHttpRequest.response;
+
+                    // 인식 성공 일 경우
+                    if (response != null) {
+                        let responseName = response.name;
+                        let responseAddress = response.address;
+                        let responseBusinessLicenseNumber = response.businessLicenseNumber;
+                        let responserepresentativeName = response.representativeName;
+                        let responsebusinessType = response.businessType;
+                        let responsebusinessItem = response.businessItem;
+
+                        responseName = responseName.replace(/\\n/g, '');       // OCR 후 다른 특수문자는 있어야 하지만[ex.(주)] 줄 바꿈 \n은 필요없기 때문에 \n만 제거
+                        responseAddress = responseAddress.replace(/\\n/g, '');
+                        responseBusinessLicenseNumber = responseBusinessLicenseNumber.replace(/\\n/g, '');
+                        responserepresentativeName = responserepresentativeName.replace(/\\n/g, '');
+                        responsebusinessType = responsebusinessType.replace(/\\n/g, '');
+                        responsebusinessItem = responsebusinessItem.replace(/\\n/g, '');
+
+                        $("#inputName").val(responseName);
+                        $("#inputAddress").val(responseAddress);
+                        $("#inputBusinessLicenseNumber").val(responseBusinessLicenseNumber);
+                        $("#inputRepresentativeName").val(responserepresentativeName);
+                        $("#inputBusinessType").val(responsebusinessType);
+                        $("#inputBusinessItem").val(responsebusinessItem);
+
+                        inputDisabledFalse();
+
+                    }
+                    // 이미지 인식 실패 일 경우
+                    else {
+                        alertErrorMessage("OCR 인식 에러입니다.직접 기입해 주세요.");
+                        inputDisabledFalse();
+                    }
+
+                } else if (xmlHttpRequest.status === 400) {
+                    alertErrorMessage("OCR 인식 에러입니다.직접 기입해 주세요.");
+                    inputDisabledFalse();
+                    loader.addClass("d-none");
+                } else {
+                    alertErrorMessage("OCR 인식 에러입니다.직접 기입해 주세요.");
+                    inputDisabledFalse();
+                    loader.addClass("d-none");
+                }
             });
+
+            xmlHttpRequest.open("POST", "/ocr.do", true);
+            xmlHttpRequest.responseType = 'json';
+            xmlHttpRequest.send(formData);
         }
     });
 
