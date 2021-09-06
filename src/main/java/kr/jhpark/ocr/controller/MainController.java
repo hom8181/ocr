@@ -33,13 +33,13 @@ public class MainController {
     @PostMapping(value = "/ocr.do")
     @ResponseBody
     public Object ocrImage(@RequestParam("image") MultipartFile image, HttpServletRequest request, HttpServletResponse response, ModelMap modelMap) {
-
         Map<String, MultipartFile> multipartFileMap = new HashMap<>();
         multipartFileMap.put("image", image);
 
-        mainService.imageOCR(multipartFileMap);
+        Map<String, String> ocrResult = new HashMap<>();
 
-        return "";
+        mainService.imageOCR(multipartFileMap, ocrResult);
+        return ocrResult;
 
     }
 }

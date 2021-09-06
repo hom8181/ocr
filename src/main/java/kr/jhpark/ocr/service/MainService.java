@@ -1,9 +1,8 @@
 package kr.jhpark.ocr.service;
 
-import kr.jhpark.ocr.domain.EnumOcrResultType;
-
 import kong.unirest.json.JSONArray;
 import kong.unirest.json.JSONObject;
+import kr.jhpark.ocr.domain.EnumOcrResultType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -11,7 +10,6 @@ import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.UUID;
@@ -19,7 +17,7 @@ import java.util.UUID;
 @Service
 public class MainService {
 
-    public void imageOCR(Map<String, MultipartFile> ocrMap) {
+    public void imageOCR(Map<String, MultipartFile> ocrMap, Map<String, String> ocrResult) {
 
         String secretKey = "YOUR OCR SECRET KEY";
         String apiURL = "YOUR API URL";
@@ -66,7 +64,6 @@ public class MainService {
             int responseCode = con.getResponseCode();
             BufferedReader br;
             JSONObject jsonObject;
-            Map<String, String> ocrResult = new HashMap<>();
             if (responseCode == 200) {
                 br = new BufferedReader(new InputStreamReader(con.getInputStream()));
                 String text = readAll(br);
@@ -142,8 +139,6 @@ public class MainService {
                 br = new BufferedReader(new InputStreamReader(con.getErrorStream()));
             }
             br.close();
-
-
         } catch (Exception e) {
             System.out.println(e);
             file.delete();
