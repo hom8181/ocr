@@ -38,28 +38,28 @@
 
 
     <div>
-        <label for="company_name">회사 명
-            <input type="text" id="company_name">
+        <label for="company-name">회사 명
+            <input type="text" id="company-name">
         </label>
     </div>
     <div>
-        <label for="business_license_number"> 사업자 등록번호
-            <input type="text" id="business_license_number">
+        <label for="business-license-number"> 사업자 등록번호
+            <input type="text" id="business-license-number">
         </label>
     </div>
     <div>
-        <label for="representative_name">대표자 명
-            <input type="text" id="representative_name">
+        <label for="representative-name">대표자 명
+            <input type="text" id="representative-name">
         </label>
     </div>
     <div>
-        <label for="business_type">업태
-            <input type="text" id="business_type">
+        <label for="business-type">업태
+            <input type="text" id="business-type">
         </label>
     </div>
     <div>
-        <label for="business_item">종목
-            <input type="text" id="business_item">
+        <label for="business-item">종목
+            <input type="text" id="business-item">
         </label>
     </div>
 
@@ -125,29 +125,25 @@
                         responsebusinessType = responsebusinessType.replace(/\\n/g, '');
                         responsebusinessItem = responsebusinessItem.replace(/\\n/g, '');
 
-                        $("#inputName").val(responseName);
-                        $("#inputAddress").val(responseAddress);
-                        $("#inputBusinessLicenseNumber").val(responseBusinessLicenseNumber);
-                        $("#inputRepresentativeName").val(responserepresentativeName);
-                        $("#inputBusinessType").val(responsebusinessType);
-                        $("#inputBusinessItem").val(responsebusinessItem);
-
-                        inputDisabledFalse();
+                        $("#company-name").val(responseName);
+                        $("#address").val(responseAddress);
+                        $("#business-license-number").val(responseBusinessLicenseNumber);
+                        $("#representative-name").val(responserepresentativeName);
+                        $("#business-type").val(responsebusinessType);
+                        $("#business-item").val(responsebusinessItem);
 
                     }
                     // 이미지 인식 실패 일 경우
                     else {
-                        alertErrorMessage("OCR 인식 에러입니다.직접 기입해 주세요.");
-                        inputDisabledFalse();
+                        alert("OCR 인식 에러입니다.직접 기입해 주세요.");
+                        loader.addClass("d-none");
                     }
 
                 } else if (xmlHttpRequest.status === 400) {
-                    alertErrorMessage("OCR 인식 에러입니다.직접 기입해 주세요.");
-                    inputDisabledFalse();
+                    alert("OCR 인식 에러입니다.직접 기입해 주세요.");
                     loader.addClass("d-none");
                 } else {
-                    alertErrorMessage("OCR 인식 에러입니다.직접 기입해 주세요.");
-                    inputDisabledFalse();
+                    alert("OCR 인식 에러입니다.직접 기입해 주세요.");
                     loader.addClass("d-none");
                 }
             });
