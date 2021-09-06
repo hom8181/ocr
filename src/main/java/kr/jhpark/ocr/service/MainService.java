@@ -99,7 +99,7 @@ public class MainService {
                     // ocr 결과 fields 중에서 일치하는 것을 각각의 JSONObject에 담음
                     EnumOcrResultType ocrResultType = EnumOcrResultType.valueOf(resultType);
                     switch (ocrResultType) {
-                        case name:
+                        case company_name:
                             nameJson = (JSONObject) fields.get(i);
                             break;
                         case address:
