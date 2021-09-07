@@ -32,10 +32,12 @@ public class MainController {
      */
     @PostMapping(value = "/ocr.do")
     @ResponseBody
-    public Object ocrImage(@RequestParam("image") MultipartFile image, HttpServletRequest request, HttpServletResponse response, ModelMap modelMap) {
+    public Object ocrImage(@RequestParam("image") MultipartFile image) {
+        // OCR을 위한 이미지 전송
         Map<String, MultipartFile> multipartFileMap = new HashMap<>();
         multipartFileMap.put("image", image);
 
+        // OCR 결과 값을 받을 Map 생성
         Map<String, String> ocrResult = new HashMap<>();
 
         mainService.imageOCR(multipartFileMap, ocrResult);

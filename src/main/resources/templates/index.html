@@ -5,6 +5,7 @@
     <title>OCR Test</title>
 
     <style>
+        /*<!--  loading draw   -->*/
         .loader {
             border: 16px solid #f3f3f3;
             border-top: 16px solid #3498db;
@@ -34,6 +35,7 @@
 
     <div class="loader d-none"></div>
 
+    <!--  이미지가 보여질 부분  -->
     <img alt="" id="previewImage" style="height: 350px; max-width: 300px;" src="">
 
 
@@ -69,15 +71,12 @@
         </label>
     </div>
 
-
 </div>
-
-</body>
-
-
+<!-- jquery min-->
 <script src="https://code.jquery.com/jquery-latest.min.js"></script>
 
 <script>
+    // 이미지 업로드 시
     $('#imageFile').on('change', function () {
         let extension = $(this).val().split('.').pop().toLowerCase(); //확장자
         if ($.inArray(extension, ['png', 'jpg', 'jpeg']) === -1) {
@@ -144,7 +143,7 @@
                     loader.addClass("d-none");
                 } else {
                     alert("OCR 인식 에러입니다.직접 기입해 주세요.");
-                    loader.addClass("d-none");
+                    loader.addClass("d-none");  1
                 }
             });
 
@@ -156,4 +155,6 @@
 
 
 </script>
+
+</body>
 </html>
